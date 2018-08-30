@@ -11,6 +11,8 @@ Output device features: 'D2', 'D3', 'D4', 'D5\~PWM', 'D6\~PWM', 'D7', 'D8', 'D9\
 
 
 
+
+
 在AR9331上面的OpenWRT上安裝Python套件 requests 的指令(依序)
 
 
