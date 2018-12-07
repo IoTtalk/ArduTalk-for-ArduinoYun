@@ -1,6 +1,6 @@
 import DAN
 
-ServerURL='http://IP:9999' #None:AutoSearch, or ='URL':Connect to this URL
+ServerIP='http://IP:9999' #None:AutoSearch, or ='URL':Connect to this URL
 Comm_interval = 0.5 # unit:second
 
 def profile_init():
