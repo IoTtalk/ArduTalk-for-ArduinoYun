@@ -34,7 +34,7 @@ Output device features: 'D2', 'D3', 'D4', 'D5\~PWM', 'D6\~PWM', 'D7', 'D8', 'D9\
     
     pip install requests-2.15.1-py2.py3-none-any.whl
 
-    rm requests-2.8.1-py2.py3-none-any.whl
+    rm requests-2.15.1-py2.py3-none-any.whl
 
     Ref. :
     https://blog.csdn.net/cpq37/article/details/101766475
