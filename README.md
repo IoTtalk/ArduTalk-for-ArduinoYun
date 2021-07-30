@@ -28,8 +28,11 @@ Output device features: 'D2', 'D3', 'D4', 'D5\~PWM', 'D6\~PWM', 'D7', 'D8', 'D9\
     
     easy_install pip-10.0.1.tar.gz
     
-    pip install equests-2.8.1-py2.py3-none-any.whl
+    rm pip-10.0.1.tar.gz
+    
+    pip install requests-2.8.1-py2.py3-none-any.whl
 
+    rm requests-2.8.1-py2.py3-none-any.whl
 
     Ref. :
     https://blog.csdn.net/cpq37/article/details/101766475
