@@ -22,11 +22,17 @@ Output device features: 'D2', 'D3', 'D4', 'D5\~PWM', 'D6\~PWM', 'D7', 'D8', 'D9\
 
     opkg install python-openssl #adds ssl support to python
 
-    easy_install https://files.pythonhosted.org/packages/ae/e8/2340d46ecadb1692a1e455f13f75e596d4eab3d11a57446f08259dee8f02/pip-10.0.1.tar.gz#sha256=f2bd08e0cd1b06e10218feaf6fef299f473ba706582eb3bd9d52203fdbd7ee68
-
-    pip install requests
-
     opkg install openssh-sftp-server
+    
+    把 pip-10.0.1.tar.gz 與 requests-2.8.1-py2.py3-none-any.whl 用 SFTP 上傳到ArduinoYun內
+    
+    easy_install pip-10.0.1.tar.gz
+    
+    pip install equests-2.8.1-py2.py3-none-any.whl
+
+
+    Ref. :
+    https://blog.csdn.net/cpq37/article/details/101766475
 
 
 
