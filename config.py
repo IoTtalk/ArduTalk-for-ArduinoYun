@@ -1,5 +1,5 @@
 ServerURL='http://IP:9999'   
-dm_name = '?'
+dm_name = 'MCU_board'
 d_name = None
 
 MQTT_broker =  None
