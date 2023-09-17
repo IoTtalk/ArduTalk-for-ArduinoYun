@@ -15,29 +15,18 @@ Output device features: 'D2', 'D3', 'D4', 'D5\~PWM', 'D6\~PWM', 'D7', 'D8', 'D9\
 
 在AR9331上面的OpenWRT上安裝Python套件 requests 的指令(依序)
 
+    wget http://yun.iottalk.tw/yunDAinstall.sh
+    chmod 700 yunDAinstall.sh
+    ./yunDAinstall.sh
 
-    opkg update                 #updates the available packages list
+執行 yunDAinstall.sh 會需要運作一段時間，尤其執行到pip安裝時，會等很久，要有耐心等候，不要將之中斷。 安裝完畢後自動進入編輯config.py的畫面(vi config.py)，
+在這邊填入需要的對應資訊後，按下 ESC 輸入 :wq 存檔退出即可。
 
-    opkg install distribute     #it contains the easy_install command line tool
+要測試執行效果可以下指令python DAI.py
+若出現錯誤 "socket.error: [Errno 146] Connection refused"
+表示Arduino端的Bridge沒有正確執行，所以無法連線。通常是Arduino端的沒有燒入對應的 .ino 檔，或是沒有正確執行。
 
-    opkg install python-openssl #adds ssl support to python
 
-    opkg install openssh-sftp-server
-    
-    wget http://yun.iottalk.tw/pip-10.0.1.tar.gz
-    
-    easy_install pip-10.0.1.tar.gz
-    
-    rm pip-10.0.1.tar.gz
-    
-    wget http://yun.iottalk.tw/requests-2.15.1-py2.py3-none-any.whl
-    
-    pip install requests-2.15.1-py2.py3-none-any.whl
-
-    rm requests-2.15.1-py2.py3-none-any.whl
-
-    Ref. :
-    https://blog.csdn.net/cpq37/article/details/101766475
 
 
 
@@ -51,3 +40,7 @@ Output device features: 'D2', 'D3', 'D4', 'D5\~PWM', 'D6\~PWM', 'D7', 'D8', 'D9\
     python setup.py install
     pip install requests
     opkg install openssh-sftp-server
+
+
+
+Ref.: https://blog.csdn.net/cpq37/article/details/101766475
