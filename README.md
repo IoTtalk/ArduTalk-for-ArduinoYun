@@ -45,6 +45,7 @@ odf_list = [
 
 
 idf_list = [
+       ('A0', int), 
        ('A1', int),
        ('A2', int),
        ('A3', int),
