@@ -36,7 +36,9 @@ def LED_flash(LED_state):
         Bclient.put('Reg_done', '0')
         os.system(r'echo "none" > /sys/class/leds/ds:green:usb/trigger')
 
+CONNECT_STATE = False
 def on_connect(client, userdata, flags, rc):
+    global CONNECT_STATE
     if not rc:
         print('MQTT broker: {}'.format(broker))
         LED_flash(1)
@@ -51,6 +53,7 @@ def on_connect(client, userdata, flags, rc):
             r = client.subscribe(topic_list)
             if r[0]: print('Failed to subscribe topics. Error code:{}'.format(r))
             else: print('Subscribe:', topic_list)
+        CONNECT_STATE = True    
     else: print('Connect to MQTT borker failed. Error code:{}'.format(rc))
         
 def on_disconnect(client, userdata,  rc):
@@ -58,14 +61,26 @@ def on_disconnect(client, userdata,  rc):
     LED_flash(0)
     client.reconnect()
 
+SUSPEND_IDF = False
+SUSPEND_ODF = False
 def on_message(client, userdata, msg):
+    global SUSPEND_ODF
     os.system(r'echo "default-on" > /sys/class/leds/ds:green:wlan/trigger')
     samples = json.loads(msg.payload)
     odf = msg.topic.split('//')[1]
     data = samples['samples'][0][1]
     ###ODFdir{'f_name': ('pin_name', index)}### just note
     print('{}: {}, {}'.format(samples['samples'][0][0], ODFdir[odf][0], str(int(data[ODFdir[odf][1]]))))
+    
+    while SUSPEND_IDF: 
+        print('SUSPEND due to IDF, wait.')
+        time.sleep(0.1)
+    SUSPEND_ODF = True
+    print('SUSPEND_ODF = True')
     Bclient.put(ODFdir[odf][0], str(int(data[ODFdir[odf][1]])))
+    SUSPEND_ODF = False
+    print('SUSPEND_ODF = False')
+    
     os.system(r'echo "none" > /sys/class/leds/ds:green:wlan/trigger')
 
 def mqtt_pub(client, deviceId, IDF, data):
@@ -93,6 +108,7 @@ if broker:
     mqttc = mqtt.Client()
     MQTT_config(mqttc)
     mqttc.loop_start()
+    while not CONNECT_STATE: time.sleep(0.5)
 
 incomming = {}
 for f_name in [t[0] for t in odf_list]:
@@ -101,13 +117,25 @@ for f_name in [t[0] for t in odf_list]:
 if idf_list == []: print('IDF list is empty.')
 reConnecting = 0
 while True:
-    try:
+#    try:
+    if 1:
         for f_name, type_ in idf_list:
+        
+            while SUSPEND_ODF:
+                print('SUSPEND due to ODF, wait.')
+                time.sleep(0.3)
+            SUSPEND_IDF = True 
             tmp = Bclient.get(f_name)
+            SUSPEND_IDF = False
             if tmp is None:
                 continue            
             else: 
+                while SUSPEND_ODF:
+                    print('SUSPEND due to ODF, wait.')
+                    time.sleep(0.3)
+                SUSPEND_IDF = True
                 Bclient.delete(f_name)    
+                SUSPEND_IDF = False
 
             v = type_(tmp)
             if v is not None:
@@ -118,6 +146,7 @@ while True:
                     DAN.push(f_name, v)
                 print '{t}: Push({f}, {v!r})'.format(t=datetime.today(), f=f_name, v=v)
                 os.system(r'echo "none" > /sys/class/leds/ds:green:wlan/trigger')
+            time.sleep(0.5)    
 
         if broker: 
             time.sleep(config.Comm_interval)
@@ -157,7 +186,8 @@ while True:
             LED_flash(1)
             reConnecting = 0    
     
-    except Exception, e:
+#    except Exception, e:
+    else:
         print(e)
         LED_flash(0) 
         if str(e).find('mac_addr not found:') != -1:
