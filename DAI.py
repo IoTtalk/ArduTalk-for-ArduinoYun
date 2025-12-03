@@ -117,8 +117,7 @@ for f_name in [t[0] for t in odf_list]:
 if idf_list == []: print('IDF list is empty.')
 reConnecting = 0
 while True:
-#    try:
-    if 1:
+    try:
         for f_name, type_ in idf_list:
         
             while SUSPEND_ODF:
@@ -186,8 +185,7 @@ while True:
             LED_flash(1)
             reConnecting = 0    
     
-#    except Exception, e:
-    else:
+    except Exception, e:
         print(e)
         LED_flash(0) 
         if str(e).find('mac_addr not found:') != -1:
