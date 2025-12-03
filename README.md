@@ -1,5 +1,59 @@
 # ArduTalk_for_ArduinoYun
 
+## 安裝程序
+在Arduino ATMega32u4端，要燒入以下INO檔
+
+ArduTalk-for-ArduinoYun/sketch_apr17a/sketch_apr17a.ino
+
+https://github.com/IoTtalk/ArduTalk-for-ArduinoYun/blob/master/sketch_apr17a/sketch_apr17a.ino
+
+
+之後SSH登入ArduinoYun Linux介面後，輸入以下指令進行安裝程序。(要先讓Yun連上Internet才可執行下列指令)
+```
+wget http://yun.iottalk.tw/yunArduTalkInst.tar.gz
+tar -zvxf yunArduTalkInst.tar.gz
+rm yunArduTalkInst.tar.gz
+chmod 700 yunArduTalkInst.sh
+./yunArduTalkInst.sh
+```
+
+執行完上述指令後，會自動進入編輯config.py的狀態，
+
+https://github.com/IoTtalk/ArduTalk-for-ArduinoYun/blob/master/config.py
+
+在config.py中，要填寫連線主機資訊(Lines 1 ~ 8)，填寫完成存檔後，斷電重啟板子後，看到白燈閃爍、紅燈亮起，即為成功運作。
+
+
+## Device Model: 
+本應用的IoTtalk Device Model 為
+```
+MCU_board
+```
+
+## Device Feature:
+本應用的IoTtalk Input Device Feature (IDF) 與 Output Device Feature (ODF) 為
+```
+odf_list = [
+        ('D2', 0, 'D2'),
+        ('D3', 0, 'D3'),
+        ('D4', 0, 'D4'),
+        ('D5~PWM', 0, 'D5~PWM'),
+        ('D6~PWM', 0, 'D6~PWM'),
+        ('D7', 0, 'D7'),
+        ('D8', 0, 'D8'),
+        ('D9~PWM', 0, 'D9~PWM'),]
+
+
+idf_list = [
+       ('A1', int),
+       ('A2', int),
+       ('A3', int),
+       ('A4', int),
+       ('A5', int),]
+```
+
+
+## Apprndix
 Device model: 'MCU_board'
 
 
